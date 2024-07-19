@@ -1,10 +1,12 @@
-import React from 'react'
+import MainNavigation from '@/components/Navigation'
+import React, { Fragment } from 'react'
 
 const index = () => {
   return (
-    <div>
-      <h1>Smart Home Automation System</h1>
-    </div>
+    <Fragment>
+      <MainNavigation />
+      <h1>Dashboard</h1>
+    </Fragment>
   )
 }
 

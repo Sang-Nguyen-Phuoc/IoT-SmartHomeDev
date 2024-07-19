@@ -1,0 +1,121 @@
+.login {
+  height: 100vh;
+  background: linear-gradient(rgba(196, 102, 0, 0.6), rgba(155, 89, 182, 0.6));
+  background-size: cover;
+  position: relative;
+}
+.login-wrapper {
+  padding: 20px 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.login-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+.login-form {
+  width: 500px;
+  height: calc(350px * 1.618);
+  padding: 30px;
+  border-radius: 5px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  color: black;
+}
+
+.login-form input {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-bottom: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  color: #2c3e50;
+  font-size: 16px;
+}
+
+.login-form input::placeholder {
+  color: lightgrey;
+}
+.login-form input:focus {
+  border-color: rgb(231, 89, 13);
+}
+
+.login-button {
+  padding: 0;
+  border: none;
+  background: rgb(255, 27, 0);
+  background: linear-gradient(
+    0deg,
+    rgba(255, 27, 0, 1) 0%,
+    rgba(251, 75, 2, 1) 100%
+  );
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  z-index: 100;
+  transition: all 0.3s;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.login-button:hover {
+  color: #f0094a;
+  background: green;
+  box-shadow: none;
+  color: white;
+}
+
+.login-form button {
+  height: 40px;
+  color: white;
+  padding: 0;
+  border: none;
+  background: rgb(255, 27, 0);
+  background: linear-gradient(
+    0deg,
+    rgba(255, 27, 0, 1) 0%,
+    rgba(251, 75, 2, 1) 100%
+  );
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.login-form span {
+  color: black;
+  font-size: 14px;
+  text-align: center;
+}
+
+.b {
+  color: black;
+  transition: all 0.3s;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.b:hover {
+  text-decoration: underline;
+  font-size: 103%;
+}
+
+.alert {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 0;
+  padding: 0;
+  height: 1px;
+  width: 100%;
+}

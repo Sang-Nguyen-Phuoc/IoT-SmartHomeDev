@@ -17,7 +17,7 @@ const MainNavigation = () => {
                         <Link href='/dashboard'>Dashboard</Link>
                     </li>
                     <li>
-                        <Link href='/login'>Login</Link>
+                        <Link href='/login'>Log out</Link>
                     </li>
                 </ul>
             </nav>
