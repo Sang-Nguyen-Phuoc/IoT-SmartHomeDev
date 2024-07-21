@@ -1,6 +1,10 @@
 import classes from "../styles/Signup.module.css";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { auth, db } from "../firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -12,9 +16,41 @@ const Login = () => {
     const [isPhoneNumber, setIsPhoneNumber] = useState(true);
     const router = useRouter();
 
-    const HandleSignup = (e) => {
+    const handleSignup = async (e) => {
         e.preventDefault();
-    }
+        try {
+            await createUserWithEmailAndPassword(auth, email, password);
+            const user = auth.currentUser;
+            await setDoc(doc(db, "Users", user.uid), {
+                email: user.email,
+                phoneNumber: phoneNumber
+            });
+            router.push("/login");
+        } catch (error) {
+            if (error.code === "auth/missing-email" || error.code === "auth/invalid-email") {
+                setIsEmailed(false);
+                setIsPassworded(true);
+                setIsSignedUp(true);
+                setIsPhoneNumber(true);
+                setEmail("");
+            }
+            if (error.code === "auth/missing-password" || error.code === "auth/weak-password") {
+                setIsPassworded(false);
+                setIsEmailed(true);
+                setIsSignedUp(true);
+                setIsPhoneNumber(true);
+                setPassword("");
+            }
+            if (error.code === "auth/email-already-in-use") {
+                setIsSignedUp(false);
+                setIsEmailed(true);
+                setIsPassworded(true);
+                setIsPhoneNumber(true);
+                setPassword("");
+            }
+
+        }
+    };
 
     return (
         <div className={classes['register']}>
@@ -22,7 +58,7 @@ const Login = () => {
                 <h1>SmartDev</h1>
             </div>
             <div className={classes['sign-up-container']}>
-                <form className={classes['sign-up-form']} onSubmit={HandleSignup}>
+                <form className={classes['sign-up-form']} onSubmit={handleSignup}>
                     <h1>Sign up</h1>
                     {!isSignedUp && <div className={classes['alert']}>The email address is already in use</div>}
                     {!isEmailed && <div className={classes['alert']}>Email required</div>}

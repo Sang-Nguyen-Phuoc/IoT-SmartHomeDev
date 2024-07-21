@@ -1,23 +1,31 @@
-import Link from 'next/link';
-
 import classes from '../styles/Navigation.module.css';
 import { useRouter } from 'next/router';
+import { auth } from '../firebase';
 
 const MainNavigation = () => {
-    const router = useRouter();
-    const navigateToHome = () => {
-        router.push('/');
+    const routeToLogin = useRouter();
+    const handleLogOut = async () => {
+        try {
+            await auth.signOut();
+            window.location.href = "/login";
+            console.log("User logged out successfully!");
+        } catch (error) {
+            console.error("Error logging out:", error.message);
+        }
     }
+
     return (
         <header className={classes.header}>
-            <div className={classes.logo} onClick={navigateToHome}>SmartDev</div>
+            <div className={classes.logo}>SmartDev</div>
             <nav>
                 <ul>
                     <li>
-                        <Link href='/dashboard'>Dashboard</Link>
-                    </li>
-                    <li>
-                        <Link href='/login'>Log out</Link>
+                        <div onClick={handleLogOut} style={{
+                            cursor: 'pointer',
+                            color: 'white',
+                            fontSize: '1.5rem',
+                            fontWeight: 'bold'
+                        }}>Log out</div>
                     </li>
                 </ul>
             </nav>
