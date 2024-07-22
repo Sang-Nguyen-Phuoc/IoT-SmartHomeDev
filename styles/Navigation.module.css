@@ -59,6 +59,7 @@
 .log-out {
   cursor: pointer;
   color: #313244;
+  font-weight: bold;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   background-color: #f38ba8;
