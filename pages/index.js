@@ -32,13 +32,6 @@ const index = () => {
         <Fragment>
           <MainNavigation />
           <h1>Welcome to dashboard</h1>
-          {user ? (
-            <div>
-              <p>Email: {user?.email}</p>
-              <p>Phone Number: {user?.phoneNumber}</p>
-            </div>
-          ) : (<p>Loading...</p>)
-          }
         </Fragment>
       )}
     </>

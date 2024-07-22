@@ -1,9 +1,14 @@
 import classes from '../styles/Navigation.module.css';
-import { useRouter } from 'next/router';
 import { auth } from '../firebase';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useState, useEffect } from 'react';
 
 const MainNavigation = () => {
-    const routeToLogin = useRouter();
+    const [dashboard, setDashboard] = useState(false);
+    const [settings, setSettings] = useState(false);
+    const [param, setParam] = useState('');
+
     const handleLogOut = async () => {
         try {
             await auth.signOut();
@@ -14,18 +19,33 @@ const MainNavigation = () => {
         }
     }
 
+    const pathname = usePathname();
+
+    useEffect(() => {
+        if (pathname === "/") {
+            setParam("Dashboard");
+            setDashboard(true);
+            setSettings(false);
+        } else if (pathname === "/settings") {
+            setParam("Settings");
+            setDashboard(false);
+            setSettings(true);
+        } else if (pathname === "/logs") {
+            setParam("Logs");
+            setDashboard(false);
+            setSettings(false)
+        }
+    }, [pathname]);
+
     return (
         <header className={classes.header}>
-            <div className={classes.logo}>SmartDev</div>
+            <div className={classes.logo}>{param}</div>
             <nav>
                 <ul>
-                    <li>
-                        <div onClick={handleLogOut} style={{
-                            cursor: 'pointer',
-                            color: 'white',
-                            fontSize: '1.5rem',
-                            fontWeight: 'bold'
-                        }}>Log out</div>
+                    <li className={classes.cta}>
+                        {!dashboard && <Link href="/">Dashboard</Link>}
+                        {!settings && <Link href="/settings">Settings</Link>}
+                        <div onClick={handleLogOut}>Log out</div>
                     </li>
                 </ul>
             </nav>
