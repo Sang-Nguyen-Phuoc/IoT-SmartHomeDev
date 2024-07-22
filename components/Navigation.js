@@ -3,6 +3,7 @@ import { auth } from '../firebase';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import DateTime from './DateTime';
 
 const MainNavigation = () => {
     const [dashboard, setDashboard] = useState(false);
@@ -40,6 +41,9 @@ const MainNavigation = () => {
     return (
         <header className={classes.header}>
             <div className={classes.logo}>{param}</div>
+            <div className={classes.datetime}>
+                <DateTime />
+            </div>
             <nav>
                 <ul>
                     <li className={classes.cta}>
