@@ -1,3 +1,5 @@
+@import url("https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css");
+
 * {
   margin: 0;
   padding: 0;
@@ -9,4 +11,8 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+body {
+  font-family: "Fira Code Nerd Font", monospace;
 }

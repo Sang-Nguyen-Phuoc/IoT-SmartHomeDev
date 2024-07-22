@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import DateTime from './DateTime';
 
+
 const MainNavigation = () => {
     const [dashboard, setDashboard] = useState(false);
     const [settings, setSettings] = useState(false);
@@ -49,11 +50,11 @@ const MainNavigation = () => {
                     <li className={classes.cta}>
                         {!dashboard && <Link href="/">Dashboard</Link>}
                         {!settings && <Link href="/settings">Settings</Link>}
-                        <div onClick={handleLogOut}>Log out</div>
+                        <div onClick={handleLogOut} className={classes['log-out']} > Log out</div>
                     </li>
                 </ul>
             </nav>
-        </header>
+        </header >
     );
 }
 

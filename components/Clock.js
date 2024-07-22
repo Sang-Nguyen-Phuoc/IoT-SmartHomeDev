@@ -26,7 +26,7 @@ const Clock = () => {
 
         // Add leading zero to minutes if needed
         const formattedMinute = minute < 10 ? `0${minute}` : minute;
-
+        console.log(formattedMinute);
         return { hour, minute: formattedMinute, ampm };
     }
     return (
@@ -46,7 +46,7 @@ const Clock = () => {
                 fontWeight: "bold",
                 color: "#8839EF",
             }}>:</p>
-            <p>{time.minute}</p>
+            <p>{getFormattedTime().minute}</p>
             <p style={{
                 marginLeft: "20px",
             }}>{getFormattedTime().ampm}</p>
