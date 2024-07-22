@@ -43,7 +43,6 @@
 .header a {
   text-decoration: none;
   color: #313244;
-  transition: transform 0.3s;
   background-color: #b4befe;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
