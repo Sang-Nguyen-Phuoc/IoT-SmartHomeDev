@@ -1,6 +1,10 @@
 .login {
   height: 100vh;
-  background: linear-gradient(to right bottom, var(--rosewater), var(--lavender, 0.6));
+  background: linear-gradient(
+    to right bottom,
+    var(--rosewater),
+    var(--lavender, 0.6)
+  );
   background-size: cover;
   position: relative;
 }
@@ -86,7 +90,7 @@
 
 .login-button:hover {
   box-shadow: 0 0 30px var(--lavender, 0.4);
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 
 .login-button:active {
