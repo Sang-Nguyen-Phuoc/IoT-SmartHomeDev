@@ -83,11 +83,8 @@ const Login = () => {
                     <span>
                         Already signed in to SmartDev? <b className={classes['b']} onClick={() => router.push('/login')}>Sign in now.</b>
                     </span>
-                    <small>
-                        This page is protected by Google reCAPTCHA to ensure you're not a bot. <b>Learn more</b>.
-                    </small>
                 </form>
-            </div>
+            </div> 
         </div>
     );
 };

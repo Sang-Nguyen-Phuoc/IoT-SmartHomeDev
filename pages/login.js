@@ -64,7 +64,7 @@ const Login = () => {
                         </div>
                         <div className={classes['login-container']}>
                             <form className={classes['login-form']} onSubmit={handleLogin}>
-                                <h1>Sign In</h1>
+                                <h1>Welcome!</h1>
                                 {!isSignedIn && <div className={classes['alert']}>User not found</div>}
                                 {!isEmail && <div className={classes['alert']}>Email required</div>}
                                 <input
@@ -84,9 +84,6 @@ const Login = () => {
                                 <span>
                                     New to SmartDev? <b className={classes['b']} onClick={() => router.push('/signup')}>Sign up now.</b>
                                 </span>
-                                <small>
-                                    This page is protected by Google reCAPTCHA to ensure you're not a bot. <b>Learn more</b>.
-                                </small>
                             </form>
                         </div>
                     </div>
