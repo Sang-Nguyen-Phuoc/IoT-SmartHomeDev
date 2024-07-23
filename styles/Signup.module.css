@@ -79,6 +79,7 @@
   transition: all 0.3s;
   width: 50%;
   margin: 0 auto;
+  font-family: "Fira Code Nerd Font", monospace;
 }
 
 .sign-up-form button {
