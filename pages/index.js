@@ -4,7 +4,7 @@ import Login from '@/pages/login';
 import { getDoc, doc } from "firebase/firestore";
 import { db, auth } from "../firebase";
 import LineChart from '@/components/LineChart';
-import classes from '@/styles/Dashboard.module.css';
+import classes from '../styles/Dashboard.module.css';
 import Clock from '@/components/Clock';
 
 
