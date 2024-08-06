@@ -57,7 +57,7 @@ const logs = () => {
                     </div>
                     {currentLogs.map((log) => (
                         <div key={log.id} className={classes['log']}>
-                            <div className={classes['temperature']}>{log.light}</div>
+                            <div className={classes['light']}>{log.light}</div>
                             <div className={classes['light-intensity']}>{log.motion}</div>
                             <div className={classes['motion']}>{log.time}</div>
                         </div>
