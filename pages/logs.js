@@ -31,7 +31,7 @@ const logs = () => {
     }, []);
 
     useEffect(() => {
-        setTotalPages(Math.ceil(logs.length / 20));
+        setTotalPages(Math.ceil(logs.length / 15));
     }, [logs]);
 
     const handlePageChange = (action) => {
@@ -42,8 +42,8 @@ const logs = () => {
         }
     }
 
-    const startIdx = (page - 1) * 20;
-    const currentLogs = logs.slice(startIdx, startIdx + 20);
+    const startIdx = (page - 1) * 15;
+    const currentLogs = logs.slice(startIdx, startIdx + 15);
     return (
         <>
             <MainNavigation />

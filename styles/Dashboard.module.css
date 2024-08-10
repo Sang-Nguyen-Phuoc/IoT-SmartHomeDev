@@ -16,6 +16,32 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 12px;
+}
+
+.percent {
+  color: #04a5e5;
+  font-size: 7rem;
+  font-weight: 700;
+}
+
+.text {
+  color: #04a5e5;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.motion-text {
+  color: #e64553;
+  font-size: 3rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.time {
+  color: #e64553;
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
 .right-ele {

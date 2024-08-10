@@ -39,11 +39,17 @@ const index = () => {
             <h2>Last update: {new Date().toLocaleTimeString()}</h2>
           </div>
           <div className={classes.container}>
-            <div className={classes['left-ele']}>Humidity</div>
+            <div className={classes['left-ele']}>
+              <div className={classes['percent']}>83%</div>
+              <div className={classes['text']}>Humidity</div>
+            </div>
             <div className={classes['line-chart', 'right-ele']}>
               <LineChart />
             </div>
-            <div className={classes['left-ele']}>Motion detect</div>
+            <div className={classes['left-ele']}>
+              <div className={classes['motion-text']}>Motion Detected!</div>
+              <div className={classes['time']}>At 02:54 am</div>
+            </div>
             <div className={classes['line-chart', 'right-ele']}>
               <LineChart />
             </div>
