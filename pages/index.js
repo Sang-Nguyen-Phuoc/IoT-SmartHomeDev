@@ -1,63 +1,49 @@
-import MainNavigation from '@/components/Navigation'
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react';
+import MainNavigation from '@/components/Navigation';
 import Login from '@/pages/login';
-import { getDoc, doc } from "firebase/firestore";
-import { db, auth } from "../firebase";
+import { getUser } from '@/components/User';
 import LineChart from '@/components/LineChart';
 import classes from '@/styles/Dashboard.module.css';
 import Clock from '@/components/Clock';
 
-
-const index = () => {
+const Index = () => {
   const [user, setUser] = useState(null);
 
-  const getUser = () => {
-    auth.onAuthStateChanged(async (user) => {
-      if (!user) {
-        setUser(null);
-        return;
-      }
-      const docRef = doc(db, "Users", user.uid);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setUser(docSnap.data());
-        console.log(docSnap.data());
-      }
-    });
-  }
-
   useEffect(() => {
-    getUser();
+    getUser(setUser);
   }, []);
+
   return (
     <>
-      {!user ? (<Login />) : (
+      {!user ? (
+        <Login />
+      ) : (
         <Fragment>
-          <MainNavigation />
-          <div className={classes['timer']}>
+          <MainNavigation user={user} />
+          <div className={classes.timer}>
             <Clock />
             <h2>Last update: {new Date().toLocaleTimeString()}</h2>
           </div>
           <div className={classes.container}>
             <div className={classes['left-ele']}>
-              <div className={classes['percent']}>83%</div>
-              <div className={classes['text']}>Humidity</div>
+              <div className={classes.percent}>83%</div>
+              <div className={classes.text}>Humidity</div>
             </div>
-            <div className={classes['line-chart', 'right-ele']}>
-              <LineChart />
+            <div className={`${classes['line-chart']} ${classes['right-ele']}`}>
+              <LineChart category="Temperature" />
             </div>
             <div className={classes['left-ele']}>
               <div className={classes['motion-text']}>Motion Detected!</div>
-              <div className={classes['time']}>At 02:54 am</div>
+              <div className={classes.time}>At 02:54 am</div>
             </div>
-            <div className={classes['line-chart', 'right-ele']}>
-              <LineChart />
+            <div className={`${classes['line-chart']} ${classes['right-ele']}`}>
+              <LineChart category="Light intensity" />
             </div>
           </div>
-
-        </Fragment >
+        </Fragment>
       )}
     </>
   );
-}
-export default index;
+};
+
+export default Index;

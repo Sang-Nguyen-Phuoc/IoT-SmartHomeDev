@@ -36,23 +36,24 @@ const tempData = [
     { time: "24", temp: 34 },
 ];
 
-const LineChart = () => {
+const LineChart = (props) => {
+    const chartColor = props.category === "Temperature" ? "#179299" : "#DF8E1D";
     const data = {
         labels: tempData.map((data) => data.time),
         datasets: [
             {
                 label: "°C",
                 data: tempData.map((data) => data.temp),
-                borderColor: "#179299",
+                borderColor: chartColor,
                 borderWidth: 3,
-                pointBorderColor: "#179299",
+                pointBorderColor: chartColor,
                 pointBorderWidth: 3,
                 tension: 0.1,
                 fill: true,
                 backgroundColor: (context) => {
                     const ctx = context.chart.ctx;
                     const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-                    gradient.addColorStop(0, "#179299");
+                    gradient.addColorStop(0, chartColor);
                     gradient.addColorStop(1, "white");
                     return gradient;
                 },
@@ -96,8 +97,8 @@ const LineChart = () => {
                 },
                 title: {
                     display: true,
-                    text: "Temperature",
-                    color: "#179299",
+                    text: props.category,
+                    color: chartColor,
                     padding: {
                         top: 10,
                     },

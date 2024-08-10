@@ -26,7 +26,6 @@ const Clock = () => {
 
         // Add leading zero to minutes if needed
         const formattedMinute = minute < 10 ? `0${minute}` : minute;
-        console.log(formattedMinute);
         return { hour, minute: formattedMinute, ampm };
     }
     return (

@@ -1,14 +1,15 @@
-import MainNavigation from '@/components/Navigation';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import classes from '../styles/Settings.module.css';
-import ProgressBar from '@/components/ProgressBar';
+import { useRouter } from 'next/router';
 import { ref, push, set } from 'firebase/database';
-import { database } from '@/firebase';
+import { database } from '../firebase';
+import Modal from '../components/Modal';
+import ProgressBar from '@/components/ProgressBar';
+import classes from '../styles/Settings.module.css';
+import MainNavigation from '@/components/Navigation';
+
 
 const Settings = () => {
     const routeToLogs = useRouter();
-
     const [progress, setProgress] = useState(1);
 
     const handlePushData = () => {
@@ -18,16 +19,13 @@ const Settings = () => {
             const data = {
                 motion: 'active',
                 light: progress,
-                // get time as DD/MM/YYYY HH:MM
-                time: new Date().toLocaleString('en-GB')
-            }
+                time: new Date().toLocaleString('en-GB'),
+            };
             set(newPostRef, data);
-
-            alert(`Motion sensor is ${data.motion} and light intensity is ${data.light}`);
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -54,13 +52,18 @@ const Settings = () => {
                     <div className={classes.number}>{progress}</div>
                     <div className={classes.cta}>
                         <div className={classes.text}>Toggle motion sensor</div>
-                        <button className={classes.button} onClick={handlePushData}>Active</button>
+                        <Modal handlePushData={handlePushData} />
                     </div>
                 </div>
-                <div className={classes['view-logs']} onClick={() => routeToLogs.push('/logs')}>View sensors logs</div>
+                <div
+                    className={classes['view-logs']}
+                    onClick={() => routeToLogs.push('/logs')}
+                >
+                    View sensors logs
+                </div>
             </div>
         </>
     );
-}
+};
 
 export default Settings;
