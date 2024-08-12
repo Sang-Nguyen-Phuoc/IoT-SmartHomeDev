@@ -4,7 +4,7 @@
   margin: 0 auto;
 }
 
-.logs {
+.log-container {
   height: 560px;
   margin-top: 40px;
   border-radius: 10px;
@@ -56,8 +56,19 @@
   font-weight: bold;
 }
 
+.logs {
+  display: flex;
+  flex-direction: column;
+}
+
 .log {
   display: flex;
   justify-content: start;
-  margin-top: 4px;
+}
+
+.data {
+  font-weight: bold;
+  font-size: 18px;
+  font-family: "Fira Code Nerd Font", monospace;
+  margin-top: 0;
 }

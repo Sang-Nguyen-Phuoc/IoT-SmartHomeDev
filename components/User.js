@@ -11,7 +11,6 @@ export const getUser = (setUser) => {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
             setUser(docSnap.data());
-            console.log(docSnap.data());
         }
     });
 };

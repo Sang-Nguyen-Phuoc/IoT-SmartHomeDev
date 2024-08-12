@@ -4,6 +4,7 @@ import classes from '@/styles/Logs.module.css'
 import { useState, useEffect } from 'react'
 import { ref, get } from 'firebase/database';
 import { database } from '@/firebase';
+import { fetchLogs } from '@/components/FetchLogs';
 
 const logs = () => {
     const [logs, setLogs] = useState([]);
@@ -11,23 +12,12 @@ const logs = () => {
     const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
-        const dbRef = ref(database, 'Sensor');
-        get(dbRef).then((snapshot) => {
-            if (snapshot.exists()) {
-                const data = snapshot.val();
-                const logsArray = Object.keys(data).map((key) => {
-                    return {
-                        id: key,
-                        ...data[key]
-                    }
-                });
-                setLogs(logsArray);
-            } else {
-                console.log("No data available");
-            }
-        }).catch((error) => {
-            console.error(error);
-        });
+        const getLogs = async () => {
+            const fetchedLogs = await fetchLogs();
+            setLogs(fetchedLogs);
+        };
+
+        getLogs();
     }, []);
 
     useEffect(() => {
@@ -48,20 +38,24 @@ const logs = () => {
         <>
             <MainNavigation />
             <div className={classes['logs-container']}>
-                <div className={classes['logs']}>
+                <div className={classes['log-container']}>
                     <div className={classes['label']}>
                         <div className={classes['temperature']}> Temperature
                         </div>
                         <div className={classes['light-intensity']}> Light intensity </div>
                         <div className={classes['motion']}> Motion sensor </div>
                     </div>
-                    {currentLogs.map((log) => (
-                        <div key={log.id} className={classes['log']}>
-                            <div className={classes['light']}>{log.light}</div>
-                            <div className={classes['light-intensity']}>{log.motion}</div>
-                            <div className={classes['motion']}>{log.time}</div>
-                        </div>
-                    ))}
+                    <div className={classes['logs']}>
+                        {currentLogs.map((log) => (
+                            <div key={log.id} className={classes['log']}>
+                                <div className={classes['data']}>{log.time}: </div>
+                                <div className={classes['data']}>{log.light}</div>
+                                {/* <div className={classes['data']}>{log.temperature}</div>
+                                <div className={classes['data']}>{log.humidity}</div> */}
+                            </div>
+                        ))}
+                    </div>
+
                 </div>
             </div>
             <div className={classes['action']}>
