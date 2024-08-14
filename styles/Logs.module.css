@@ -64,11 +64,13 @@
 .log {
   display: flex;
   justify-content: start;
+  font-size: 16px;
+  font-family: "Fira Code Nerd Font", monospace;
+  margin-top: 0;
 }
 
 .data {
-  font-weight: bold;
-  font-size: 18px;
-  font-family: "Fira Code Nerd Font", monospace;
   margin-top: 0;
+  margin-left: 12px;
+  font-weight: bold;
 }

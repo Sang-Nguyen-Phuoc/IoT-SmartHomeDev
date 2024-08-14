@@ -2,8 +2,6 @@ import MainNavigation from '@/components/Navigation'
 import React from 'react'
 import classes from '@/styles/Logs.module.css'
 import { useState, useEffect } from 'react'
-import { ref, get } from 'firebase/database';
-import { database } from '@/firebase';
 import { fetchLogs } from '@/components/FetchLogs';
 
 const logs = () => {
@@ -21,7 +19,7 @@ const logs = () => {
     }, []);
 
     useEffect(() => {
-        setTotalPages(Math.ceil(logs.length / 15));
+        setTotalPages(Math.ceil(logs.length / 16));
     }, [logs]);
 
     const handlePageChange = (action) => {
@@ -33,7 +31,7 @@ const logs = () => {
     }
 
     const startIdx = (page - 1) * 15;
-    const currentLogs = logs.slice(startIdx, startIdx + 15);
+    const currentLogs = logs.slice(startIdx, startIdx + 16);
     return (
         <>
             <MainNavigation />
@@ -48,7 +46,7 @@ const logs = () => {
                     <div className={classes['logs']}>
                         {currentLogs.map((log) => (
                             <div key={log.id} className={classes['log']}>
-                                <div className={classes['data']}>{log.time}: </div>
+                                <div className={classes['time']}>{log.time}: </div>
                                 <div className={classes['data']}>{log.light}</div>
                                 {/* <div className={classes['data']}>{log.temperature}</div>
                                 <div className={classes['data']}>{log.humidity}</div> */}
