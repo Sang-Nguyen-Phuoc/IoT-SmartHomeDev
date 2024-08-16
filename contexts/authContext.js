@@ -12,9 +12,9 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [toggle, setToggle] = useState(false);
 
-
-    const value = { user, loading };
+    const value = { user, loading, toggle, setToggle };
 
     return (
         <AuthContext.Provider value={value}>

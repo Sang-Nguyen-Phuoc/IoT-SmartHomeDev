@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { ref, push, set } from 'firebase/database';
-import { database } from '../firebase';
 import Modal from '../components/Modal';
 import ProgressBar from '@/components/ProgressBar';
 import classes from '../styles/Settings.module.css';
@@ -12,32 +10,25 @@ const Settings = () => {
     const routeToLogs = useRouter();
     const [currentLightValue, setCurrentLightValue] = useState(1);
     const [targetLightValue, setTargetLightValue] = useState(1);
-
-    const handlePushData = () => {
-        try {
-            const dbRef = ref(database, 'Sensor');
-            const newPostRef = push(dbRef);
-            const data = {
-                motion: 'active',
-                light: targetLightValue,
-                time: new Date().toLocaleString('en-GB'),
-            };
-            set(newPostRef, data);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+    const [motionSensor, setMotionSensor] = useState(false);
 
     useEffect(() => {
         const fetchSensorData = async () => {
             const data = await fetchData('Sensor');
+            const motionData = await fetchData('Motion');
+
+            const motionValues = motionData.map((item) => item.time);
             const lightValues = data.map((item) => item.light);
-            const latestLightValue = lightValues[lightValues.length - 1];
+
+            const latestMotionValue = motionValues[0];
+            const latestLightValue = lightValues[0];
+
+            setMotionSensor(latestMotionValue);
             setTargetLightValue(latestLightValue);
         };
 
         fetchSensorData();
-        const interval = setInterval(fetchSensorData, 500); // Fetch new data every 5 seconds
+        const interval = setInterval(fetchSensorData, 50); // Fetching every 0.5 seconds
 
         return () => clearInterval(interval);
     }, []);
@@ -45,23 +36,25 @@ const Settings = () => {
     useEffect(() => {
         const transitionInterval = setInterval(() => {
             setCurrentLightValue((prevValue) => {
+                const increment = Math.ceil(Math.abs(targetLightValue - prevValue) / 10); // Speed up by incrementing in larger steps
                 if (prevValue < targetLightValue) {
-                    return Math.min(prevValue + 1, targetLightValue); // Increment towards target
+                    return Math.min(prevValue + increment, targetLightValue); // Increment towards target
                 } else if (prevValue > targetLightValue) {
-                    return Math.max(prevValue - 1, targetLightValue); // Decrement towards target
+                    return Math.max(prevValue - increment, targetLightValue); // Decrement towards target
                 }
                 return prevValue;
             });
-        }, 5); // Adjust the interval for a smoother or faster transition
+        }, 50);
 
         return () => clearInterval(transitionInterval);
     }, [targetLightValue]);
-    const calculateColor = (value) => {
-        const ratio = value / 1023;
 
-        // Define start and end colors
-        const startColor = { r: 128, g: 128, b: 128, a: 1.0 }; // lighter gray, fully opaque
-        const endColor = { r: 255, g: 255, b: 0, a: 0.8 };     // bright yellow, semi-transparent
+    const calculateColor = (value) => {
+        const ratio = value / 2000;
+
+        // Define start and end colors for dark grey to bright yellowish
+        const startColor = { r: 64, g: 64, b: 64, a: 1.0 }; // dark grey, fully opaque
+        const endColor = { r: 255, g: 255, b: 100, a: 1.0 }; // bright yellowish, fully opaque
 
         // Interpolate between start and end colors
         const r = Math.round(startColor.r + (endColor.r - startColor.r) * ratio);
@@ -77,8 +70,6 @@ const Settings = () => {
         backgroundColor: calculateColor(currentLightValue),
     };
 
-
-
     return (
         <>
             <MainNavigation />
@@ -89,7 +80,7 @@ const Settings = () => {
                     <div className={classes.number}>{currentLightValue}</div>
                     <div className={classes.cta}>
                         <div className={classes.text}>Toggle motion sensor</div>
-                        <Modal />
+                        <Modal motionSensor={motionSensor} />
                     </div>
                 </div>
                 <div

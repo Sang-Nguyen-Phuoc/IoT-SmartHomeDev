@@ -6,7 +6,7 @@ const ProgressBar = ({ width, style }) => {
         <div className={classes['progress-bar']}>
             <div
                 className={classes['progress-bar-inner']}
-                style={{ width: `${(width / 1023) * 100}%`, ...style }}
+                style={{ width: `${(width / 2000) * 100}%`, ...style }}
             />
         </div>
     );

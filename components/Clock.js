@@ -36,7 +36,6 @@ const Clock = () => {
             fontSize: "4rem",
             fontWeight: "bold",
             color: "#4C4F69",
-            padding: "12px",
             gap: "10px",
         }}>
             <p>{time.hour}</p>

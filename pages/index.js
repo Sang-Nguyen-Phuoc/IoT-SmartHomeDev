@@ -6,6 +6,7 @@ import LineChart from '@/components/LineChart';
 import classes from '@/styles/Dashboard.module.css';
 import Clock from '@/components/Clock';
 import { fetchData } from '@/components/FetchLogs';
+import { useAuth } from '@/contexts/authContext'; // Make sure this import path is correct
 
 const Index = () => {
   const [user, setUser] = useState(null);
@@ -13,6 +14,8 @@ const Index = () => {
   const [temp, setTemp] = useState(0);
   const [light, setLight] = useState(0);
   const [motion, setMotion] = useState(false);
+  const [timeUpdated, setTimeUpdated] = useState(new Date().toLocaleTimeString());
+  const { toggle } = useAuth();
 
   useEffect(() => {
     getUser(setUser);
@@ -21,16 +24,12 @@ const Index = () => {
   useEffect(() => {
     const getLogs = async () => {
       const fetchedSensor = await fetchData('Sensor');
-      const fetchedMotion = await fetchData('Motion');
 
       const yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
       const formattedDate = yesterday.toISOString().split('T')[0].split('-').reverse().join('-');
-      console.log(formattedDate);
-
 
       const humidData = fetchedSensor.map((log) => log.humidity);
-      const motionData = fetchedMotion.map((log) => log.time);
 
       const tempData = fetchedSensor
         .filter((log) => log.time.split(' - ')[0] === formattedDate)
@@ -47,13 +46,21 @@ const Index = () => {
         }));
 
       setHumid(humidData);
-      setMotion(motionData);
       setTemp(tempData);
       setLight(lightData);
+
+      if (toggle) {
+        const fetchedMotion = await fetchData('Motion');
+        const motionData = fetchedMotion.map((log) => log.time);
+        setMotion(motionData);
+      }
+
+      setTimeUpdated(new Date().toLocaleTimeString());
     };
 
     getLogs();
-  }, [setUser, setHumid, setTemp, setLight, setMotion]);
+  }, [setUser, setHumid, setTemp, setLight, setMotion, toggle]);
+
 
 
 
@@ -61,9 +68,6 @@ const Index = () => {
   let humidity = humid[0];
   let motionDetected = motion[0];
   const motionTime = motionDetected ? motionDetected.split(' - ')[1] : '';
-  console.log("motion: ", motionTime);
-  console.log("Motion array: ", motion)
-  console.log("Hello", motion[0], motion[1]);
 
   return (
     <>
@@ -74,7 +78,7 @@ const Index = () => {
           <MainNavigation user={user} />
           <div className={classes.timer}>
             <Clock />
-            <h2>Last update: {new Date().toLocaleTimeString()}</h2>
+            <h2>Last update: {timeUpdated}</h2>
           </div>
           <div className={classes.container}>
             <div className={classes['left-ele']}>
@@ -85,8 +89,13 @@ const Index = () => {
               <LineChart category="Temperature" dataArray={temp} />
             </div>
             <div className={classes['left-ele']}>
-              <div className={classes['motion-text']}>Motion Detected!</div>
-              <div className={classes.time}>At {motionTime}</div>
+              {motionDetected ? (
+                <>
+                  <div className={classes['motion-active']}>Motion Detected!</div>
+                  <div className={classes.time}>At {motionTime}</div>
+                </>) : (
+                <div className={classes['motion-inactive']}>No motion detected</div>
+              )}
             </div>
             <div className={`${classes['line-chart']} ${classes['right-ele']}`}>
               <LineChart category="Light intensity" dataArray={light} />
@@ -99,3 +108,5 @@ const Index = () => {
 };
 
 export default Index;
+
+

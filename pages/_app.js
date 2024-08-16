@@ -4,6 +4,7 @@ import '../styles/globals.css'; // Import global styles
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import { AuthProvider } from "@/contexts/authContext";
 import "@/styles/globals.css";
+import Head from 'next/head';
 
 export default function App({ Component, pageProps }) {
   useEffect(() => {
@@ -12,9 +13,17 @@ export default function App({ Component, pageProps }) {
     }
   }, []);
   return (
-    <AuthProvider>
-      <Component {...pageProps} />
-    </AuthProvider>
+    <>
+      <Head>
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+        />
+      </Head>
+      <AuthProvider>
+        <Component {...pageProps} />
+      </AuthProvider>
+    </>
   );
 
 }
