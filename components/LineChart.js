@@ -20,7 +20,7 @@ ChartJS.register(
     Filler
 );
 
-const tempData = [
+const values = [
     { time: "0", temp: 20 },
     { time: "2", temp: 21 },
     { time: "4", temp: 22 },
@@ -38,12 +38,16 @@ const tempData = [
 
 const LineChart = (props) => {
     const chartColor = props.category === "Temperature" ? "#179299" : "#DF8E1D";
+
+    const temp = props.dataArray;
+
+
     const data = {
-        labels: tempData.map((data) => data.time),
+        labels: values.map((data) => data.time),
         datasets: [
             {
                 label: "°C",
-                data: tempData.map((data) => data.temp),
+                data: values.map((data) => data.temp),
                 borderColor: chartColor,
                 borderWidth: 3,
                 pointBorderColor: chartColor,

@@ -14,7 +14,6 @@
   width: calc(var(--width, 0) * 100% / 1023);
   min-width: 0;
   max-width: calc(100%);
-  background-color: #df8e1d;
   border-radius: 1em;
   padding: 1em;
 }

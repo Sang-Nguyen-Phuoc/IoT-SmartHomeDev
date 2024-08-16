@@ -21,8 +21,24 @@
   margin-bottom: 0.5rem;
 }
 
-.data {
-  margin-top: 20px;
+.label div {
+  padding: 4px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.label div:not(.active):hover {
+  text-decoration: underline solid;
+  transform: scale(1.03);
+  cursor: pointer; /* Shows pointer only when not active */
+}
+
+.label div.active {
+  background-color: #acb0be;
+  color: #ffffff;
+  text-decoration: none;
+  cursor: default;
 }
 
 .action {

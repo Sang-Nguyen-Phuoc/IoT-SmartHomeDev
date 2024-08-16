@@ -1,9 +1,9 @@
 import { ref, get } from 'firebase/database';
 import { database } from '@/firebase';
 
-export const fetchLogs = async () => {
+export const fetchData = async (collection) => {
     try {
-        const dbRef = ref(database, 'Sensor');
+        const dbRef = ref(database, collection);
         const snapshot = await get(dbRef);
         if (snapshot.exists()) {
             const data = snapshot.val();

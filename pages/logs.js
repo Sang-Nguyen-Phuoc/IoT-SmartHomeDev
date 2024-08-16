@@ -1,17 +1,18 @@
-import MainNavigation from '@/components/Navigation'
-import React from 'react'
-import classes from '@/styles/Logs.module.css'
-import { useState, useEffect } from 'react'
-import { fetchLogs } from '@/components/FetchLogs';
+import MainNavigation from '@/components/Navigation';
+import React from 'react';
+import classes from '@/styles/Logs.module.css';
+import { useState, useEffect } from 'react';
+import { fetchData } from '@/components/FetchLogs';
 
-const logs = () => {
+const Logs = () => {
     const [logs, setLogs] = useState([]);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [label, setLabel] = useState('light');
 
     useEffect(() => {
         const getLogs = async () => {
-            const fetchedLogs = await fetchLogs();
+            const fetchedLogs = await fetchData('Sensor');
             setLogs(fetchedLogs);
         };
 
@@ -30,6 +31,10 @@ const logs = () => {
         }
     }
 
+    const handleLabelChange = (newLabel) => {
+        setLabel(newLabel);
+    }
+
     const startIdx = (page - 1) * 15;
     const currentLogs = logs.slice(startIdx, startIdx + 16);
     return (
@@ -38,18 +43,32 @@ const logs = () => {
             <div className={classes['logs-container']}>
                 <div className={classes['log-container']}>
                     <div className={classes['label']}>
-                        <div className={classes['temperature']}> Temperature
+                        <div
+                            className={`${classes['temperature']} ${label === 'temperature' ? classes.active : ''}`}
+                            onClick={() => handleLabelChange('temperature')}
+                        >
+                            Temperature
                         </div>
-                        <div className={classes['light-intensity']}> Light intensity </div>
-                        <div className={classes['motion']}> Motion sensor </div>
+                        <div
+                            className={`${classes['light-intensity']} ${label === 'light' ? classes.active : ''}`}
+                            onClick={() => handleLabelChange('light')}
+                        >
+                            Light intensity
+                        </div>
+                        <div
+                            className={`${classes['motion']} ${label === 'humidity' ? classes.active : ''}`}
+                            onClick={() => handleLabelChange('humidity')}
+                        >
+                            Humidity
+                        </div>
                     </div>
                     <div className={classes['logs']}>
                         {currentLogs.map((log) => (
                             <div key={log.id} className={classes['log']}>
                                 <div className={classes['time']}>{log.time}: </div>
-                                <div className={classes['data']}>{log.light}</div>
-                                {/* <div className={classes['data']}>{log.temperature}</div>
-                                <div className={classes['data']}>{log.humidity}</div> */}
+                                {label === 'temperature' && <div className={classes['data']}>{log.temperature}°C</div>}
+                                {label === 'light' && <div className={classes['data']}>{log.light} lux</div>}
+                                {label === 'humidity' && <div className={classes['data']}>{log.humidity}%</div>}
                             </div>
                         ))}
                     </div>
@@ -68,7 +87,7 @@ const logs = () => {
                 </button>
             </div>
         </>
-    )
+    );
 }
 
-export default logs
+export default Logs;

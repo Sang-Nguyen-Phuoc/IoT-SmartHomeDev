@@ -1,13 +1,13 @@
 import React from 'react';
 import classes from '../styles/ProgressBar.module.css';
 
-const ProgressBar = ({ width }) => {
+const ProgressBar = ({ width, style }) => {
     return (
         <div className={classes['progress-bar']}>
             <div
                 className={classes['progress-bar-inner']}
-                style={{ '--width': width }}
-            ></div>
+                style={{ width: `${(width / 1023) * 100}%`, ...style }}
+            />
         </div>
     );
 };
