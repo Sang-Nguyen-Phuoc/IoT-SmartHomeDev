@@ -1,30 +1,31 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import classes from '../styles/Settings.module.css';
-import { getUser } from '@/components/User';
-import emailjs from '@emailjs/browser';
-import { useAuth } from '@/contexts/authContext'; // Make sure this import path is correct
+import { getUser } from '@/Utils/User';
+import { useAuth } from '@/contexts/authContext';
+import { sendNotification } from '@/Utils/SendNotification';
 
 const Modal = ({ motionSensor }) => {
     const [user, setUser] = useState(null);
-    const [showSuccessModal, setShowSuccessModal] = useState(false);
 
-    // Use the useAuth hook to access the context
-    const { toggle, setToggle } = useAuth();
+    const { toggle, setToggle, isMounted, setIsActiveSending, showSuccessModal, setShowSuccessModal } = useAuth();
+
+    const handleToggle = () => {
+        setToggle(!toggle);
+        if (toggle === false) {
+            setIsActiveSending(false);
+        }
+    };
 
     const templateParams = {
-        email: user && user.email,
+        email: user && user?.email,
         message: `Motion detected! Date and time: ${motionSensor}`,
     };
 
-    const sendEmail = (e) => {
-        e.preventDefault();
-        emailjs.send('service_4vkg8rt', 'template_xy8r1wm', templateParams, 'y5i1qRrGaPmu-RuIp')
-            .then((result) => {
-                setShowSuccessModal(true);
-            }, (error) => {
-                console.log(error.text);
-            });
-    }
+    const handleSendNotification = () => {
+        setIsActiveSending(true);
+        setShowSuccessModal(sendNotification(templateParams));
+
+    };
 
     useEffect(() => {
         getUser(setUser);
@@ -42,23 +43,20 @@ const Modal = ({ motionSensor }) => {
         if (showSuccessModal) {
             const timer = setTimeout(() => {
                 setShowSuccessModal(false);
-            }, 20000); // Close the modal after 20 seconds
+            }, 2000); // Close the modal after 2 seconds
             return () => clearTimeout(timer);
         }
     }, [showSuccessModal]);
 
-
     return (
         <div>
-            {/* Button trigger modal */}
             <button
                 className={classes.button}
                 {...(!toggle && { 'data-bs-toggle': 'modal', 'data-bs-target': '#exampleModal' })}
-                onClick={() => setToggle(!toggle)}>
-                {!toggle ? 'Active' : 'Inactive'}
+                onClick={handleToggle}>
+                {isMounted ? (!toggle ? 'Active' : 'Inactive') : 'Loading...'}
             </button>
 
-            {/* Success Modal */}
             {showSuccessModal && (
                 <div
                     className="modal fade show"
@@ -72,8 +70,8 @@ const Modal = ({ motionSensor }) => {
                         <div
                             className="modal-content"
                             style={{
-                                backgroundColor: '#d4edda', // Pale green
-                                color: '#155724', // Darker green for text
+                                backgroundColor: '#d4edda',
+                                color: '#155724',
                                 fontWeight: 'bold',
                                 fontFamily: '"Fira Code Nerd Font", monospace',
                             }}
@@ -110,7 +108,6 @@ const Modal = ({ motionSensor }) => {
                 </div>
             )}
 
-            {/* Modal */}
             <div className="modal fade" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
@@ -119,11 +116,11 @@ const Modal = ({ motionSensor }) => {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
                         </div>
                         <div className="modal-body">
-                            Do you want to send a notification to {user && user.email} and {user && user.phoneNumber}?
+                            Do you want to send a notification to {user?.email} and {user?.phoneNumber}?
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                            <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={sendEmail}>Send</button>
+                            <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={handleSendNotification}>Send</button>
                         </div>
                     </div>
                 </div>
@@ -133,9 +130,3 @@ const Modal = ({ motionSensor }) => {
 };
 
 export default Modal;
-
-
-
-
-
-

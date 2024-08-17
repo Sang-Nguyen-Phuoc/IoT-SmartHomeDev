@@ -21,7 +21,7 @@
 
 .text {
   color: #4c4f69;
-  font-size: 36px;
+  font-size: 34px;
   font-weight: bold;
 }
 
@@ -37,7 +37,7 @@
 .cta {
   display: flex;
   align-items: center;
-  gap: 30%;
+  gap: 40%;
 }
 
 .button {

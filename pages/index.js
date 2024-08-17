@@ -1,21 +1,22 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import MainNavigation from '@/components/Navigation';
 import Login from '@/pages/login';
-import { getUser } from '@/components/User';
+import { getUser } from '@/Utils/User';
 import LineChart from '@/components/LineChart';
 import classes from '@/styles/Dashboard.module.css';
 import Clock from '@/components/Clock';
 import { fetchData } from '@/components/FetchLogs';
-import { useAuth } from '@/contexts/authContext'; // Make sure this import path is correct
+import { useAuth } from '@/contexts/authContext';
+import { sendNotification } from '@/Utils/SendNotification'; // Import the sendNotification function
 
 const Index = () => {
   const [user, setUser] = useState(null);
   const [humid, setHumid] = useState(0);
   const [temp, setTemp] = useState(0);
   const [light, setLight] = useState(0);
-  const [motion, setMotion] = useState(false);
+  const [motion, setMotion] = useState([]);
   const [timeUpdated, setTimeUpdated] = useState(new Date().toLocaleTimeString());
-  const { toggle } = useAuth();
+  const { toggle, isActiveSending, setShowSuccessModal, lastMotion, setLastMotion } = useAuth();
 
   useEffect(() => {
     getUser(setUser);
@@ -53,21 +54,39 @@ const Index = () => {
         const fetchedMotion = await fetchData('Motion');
         const motionData = fetchedMotion.map((log) => log.time);
         setMotion(motionData);
+
+        // Check if the motion detected is new
+        const motionDetected = motionData[0];
+        if (motionDetected && motionDetected !== lastMotion) {
+          const motionTime = motionDetected ? motionDetected.split(' - ')[1] : '';
+          const motionDate = motionDetected ? motionDetected.split(' - ')[0] : '';
+
+          const templateParams = {
+            email: user && user?.email,
+            message: `Motion detected! Date and time: ${motionDate} at ${motionTime}`,
+          };
+
+          // Call sendNotification only if it's a new motion detection
+          if (isActiveSending) {
+            const success = await sendNotification(templateParams);
+            if (success) {
+              setShowSuccessModal(true);
+              setLastMotion(motionDetected); // Update the last motion data
+            }
+          }
+        }
       }
 
       setTimeUpdated(new Date().toLocaleTimeString());
     };
 
     getLogs();
-  }, [setUser, setHumid, setTemp, setLight, setMotion, toggle]);
-
-
-
-
+  }, [toggle, user, lastMotion, isActiveSending]); // Added lastMotion and isSent as dependencies
 
   let humidity = humid[0];
   let motionDetected = motion[0];
-  const motionTime = motionDetected ? motionDetected.split(' - ')[1] : '';
+  let motionTime = motionDetected ? motionDetected.split(' - ')[1] : '';
+  let motionDate = motionDetected ? motionDetected.split(' - ')[0] : '';
 
   return (
     <>
@@ -93,6 +112,7 @@ const Index = () => {
                 <>
                   <div className={classes['motion-active']}>Motion Detected!</div>
                   <div className={classes.time}>At {motionTime}</div>
+                  <div className={classes.time}>{motionDate}</div>
                 </>) : (
                 <div className={classes['motion-inactive']}>No motion detected</div>
               )}
@@ -108,5 +128,3 @@ const Index = () => {
 };
 
 export default Index;
-
-

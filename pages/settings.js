@@ -5,12 +5,14 @@ import ProgressBar from '@/components/ProgressBar';
 import classes from '../styles/Settings.module.css';
 import MainNavigation from '@/components/Navigation';
 import { fetchData } from '@/components/FetchLogs';
+import { useAuth } from '@/contexts/authContext';
 
 const Settings = () => {
     const routeToLogs = useRouter();
     const [currentLightValue, setCurrentLightValue] = useState(1);
     const [targetLightValue, setTargetLightValue] = useState(1);
     const [motionSensor, setMotionSensor] = useState(false);
+    const { setLastMotion } = useAuth();
 
     useEffect(() => {
         const fetchSensorData = async () => {
@@ -24,6 +26,7 @@ const Settings = () => {
             const latestLightValue = lightValues[0];
 
             setMotionSensor(latestMotionValue);
+            setLastMotion(latestMotionValue);
             setTargetLightValue(latestLightValue);
         };
 
