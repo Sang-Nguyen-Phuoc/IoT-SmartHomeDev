@@ -1,9 +1,8 @@
-// Utils/Constants.js
-
-export const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-export const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
-export const EMAILJS_USER_ID = process.env.NEXT_PUBLIC_EMAILJS_USER_ID;
-export const PUSHSAFER_KEY = process.env.PUSHSAFER_KEY;
+// store all the constants used in the project
+export const EMAILJS_SERVICE_ID = service_4vkg8rt;
+export const EMAILJS_TEMPLATE_ID = template_xy8r1wm;
+export const EMAILJS_USER_ID = y5i1qRrGaPmu - RuIp;
+export const PUSHSAFER_KEY = bDrHeAvvdBNmnCDDoF0x;
 
 // Pushsafer notification settings
 export const PUSHSAFER_NOTIFICATION_SETTINGS = {

@@ -1,3 +1,4 @@
+// This is the main page of the application. It displays the dashboard with the sensor data.
 import React, { Fragment, useEffect, useState } from 'react';
 import MainNavigation from '@/components/Navigation';
 import Login from '@/pages/login';

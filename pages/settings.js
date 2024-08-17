@@ -1,3 +1,4 @@
+// Purpose: Display the settings page, where the user can set the preferred light value and toggle the motion sensor
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Modal from '../components/Modal';
