@@ -1,8 +1,8 @@
 // store all the constants used in the project
-export const EMAILJS_SERVICE_ID = service_4vkg8rt;
-export const EMAILJS_TEMPLATE_ID = template_xy8r1wm;
-export const EMAILJS_USER_ID = y5i1qRrGaPmu - RuIp;
-export const PUSHSAFER_KEY = bDrHeAvvdBNmnCDDoF0x;
+export const EMAILJS_SERVICE_ID = 'service_4vkg8rt';
+export const EMAILJS_TEMPLATE_ID = 'template_xy8r1wm';
+export const EMAILJS_USER_ID = 'y5i1qRrGaPmu-RuIp';
+export const PUSHSAFER_KEY = 'bDrHeAvvdBNmnCDDoF0x';
 
 // Pushsafer notification settings
 export const PUSHSAFER_NOTIFICATION_SETTINGS = {
