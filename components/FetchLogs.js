@@ -16,7 +16,6 @@ export const fetchData = async (collection) => {
             logsArray.reverse();
             return logsArray;
         } else {
-            console.log("No data available");
             return [];
         }
     } catch (error) {

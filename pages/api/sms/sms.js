@@ -27,7 +27,6 @@ export default async function handler(req, res) {
                     console.error('Error sending notification:', err);
                     return res.status(500).json({ success: false, error: err.message });
                 }
-                console.log('Notification sent:', result);
                 return res.status(200).json({ success: true, result });
             });
         } catch (error) {
