@@ -1,6 +1,9 @@
-import Push from 'pushsafer-notifications'
+// Utils/sms.js
+import Push from 'pushsafer-notifications';
+import { PUSHSAFER_KEY, PUSHSAFER_NOTIFICATION_SETTINGS } from '@/Utils/Constants';
+
 const push = new Push({
-    k: process.env.PUSHSAFER_KEY,
+    k: PUSHSAFER_KEY,
     debug: true
 });
 
@@ -10,16 +13,16 @@ export default async function handler(req, res) {
             const { message } = req.body;
 
             const msg = {
-                m: message,              // Message (required)
-                t: "Alert Notification", // Title (optional)
-                s: '8',                  // Sound (value 0-28) (optional)
-                v: '2',                  // Vibration (empty or value 1-3) (optional)
-                i: '5',                  // Icon (value 1-98) (optional)
-                c: '#ff3333',            // Icon color (optional)
-                u: 'https://iotsmarthome.vercel.app/',                   // URL (optional)
-                ut: 'Visit website',                  // URL Title (optional)
-                l: '10',                 // Time to Live (optional)
-                pr: '2'                  // Priority (optional: -2, -1, 0, 1, 2)
+                m: message,                   // Message (required)
+                t: PUSHSAFER_NOTIFICATION_SETTINGS.title,        // Title
+                s: PUSHSAFER_NOTIFICATION_SETTINGS.sound,        // Sound
+                v: PUSHSAFER_NOTIFICATION_SETTINGS.vibration,    // Vibration
+                i: PUSHSAFER_NOTIFICATION_SETTINGS.icon,         // Icon
+                c: PUSHSAFER_NOTIFICATION_SETTINGS.iconColor,    // Icon color
+                u: PUSHSAFER_NOTIFICATION_SETTINGS.url,          // URL
+                ut: PUSHSAFER_NOTIFICATION_SETTINGS.urlTitle,    // URL Title
+                l: PUSHSAFER_NOTIFICATION_SETTINGS.timeToLive,   // Time to Live
+                pr: PUSHSAFER_NOTIFICATION_SETTINGS.priority     // Priority
             };
 
             push.send(msg, function (err, result) {

@@ -1,13 +1,15 @@
+// Utils/sendNotification.js
 import emailjs from '@emailjs/browser';
+import { EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, EMAILJS_USER_ID } from '@/Utils/Constants';
 
 export const sendNotification = async (templateParams) => {
     try {
         // Send email
         await emailjs.send(
-            process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
-            process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+            EMAILJS_SERVICE_ID,
+            EMAILJS_TEMPLATE_ID,
             templateParams,
-            process.env.NEXT_PUBLIC_EMAILJS_USER_ID
+            EMAILJS_USER_ID
         );
 
         // Send Pushsafer notification
