@@ -27,14 +27,6 @@ const Index = () => {
     const getLogs = async () => {
       const fetchedSensor = await fetchData('Sensor');
       const humidData = fetchedSensor.map((log) => log.humidity);
-      /*     
-      humidity: 70
-      light: 396
-      temperature: 32
-      time: "12-8-2024 - 19:23:56"
-      */
-
-      // Get the temperature and light data from the fetchedSensor array in the past 10 days and map it to an array of objects with the time (date and month only) and the value of the sensor data (temperature or light intensity).
       const currentDate = new Date();
 
       // Reset the time part of currentDate to midnight (00:00:00)

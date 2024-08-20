@@ -62,13 +62,13 @@ const LineChart = ({ dataArray, category }) => {
                         weight: "bold",
                     },
                     callback: (value) => {
-                        const unit = category === "Temperature" ? "°C" : "%";
+                        const unit = category === "Temperature" ? "°C" : "lux";
                         return value + unit;
                     },
                 },
                 title: {
                     display: true,
-                    text: category,
+                    text: category === "Temperature" ? "Celcius" : "Lux",
                     padding: {
                         bottom: 10,
                     },

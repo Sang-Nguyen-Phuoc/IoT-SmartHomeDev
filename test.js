@@ -7,8 +7,6 @@ import classes from '@/styles/Dashboard.module.css';
 import Clock from '@/components/Clock';
 import { fetchData } from '@/components/FetchLogs';
 import { useAuth } from '@/contexts/authContext';
-import { sendNotification } from '@/Utils/SendNotification'; // Import the sendNotification function
-
 const Index = () => {
     const [user, setUser] = useState(null);
     const [humid, setHumid] = useState(0);

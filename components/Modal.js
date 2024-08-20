@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { act, useEffect, useState } from 'react';
 import classes from '../styles/Settings.module.css';
 import { getUser } from '@/Utils/User';
 import { useAuth } from '@/contexts/authContext';
 import { sendNotification } from '@/Utils/SendNotification';
+import { updateLogs } from '@/components/UpdateLogs';
 
 const Modal = ({ motionSensor }) => {
     const [user, setUser] = useState(null);
@@ -11,10 +12,12 @@ const Modal = ({ motionSensor }) => {
 
     const handleToggle = () => {
         setToggle(!toggle);
+        updateLogs('Settings', 'active', !toggle);
         if (toggle === false) {
             setIsActiveSending(false);
         }
     };
+
 
     const templateParams = {
         email: user && user?.email,

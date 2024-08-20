@@ -83,7 +83,7 @@ const Settings = () => {
                     <ProgressBar width={currentLightValue} style={progressBarStyle} />
                     <div className={classes.number}>{currentLightValue}</div>
                     <div className={classes.cta}>
-                        <div className={classes.text}>Toggle motion sensor</div>
+                        <div className={classes.text}>Toggle sensor</div>
                         <Modal motionSensor={motionSensor} />
                     </div>
                 </div>
