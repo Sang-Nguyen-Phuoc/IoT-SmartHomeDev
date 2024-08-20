@@ -37,7 +37,7 @@
 .cta {
   display: flex;
   align-items: center;
-  gap: 45%;
+  gap: 20%;
 }
 
 .button {
@@ -62,4 +62,16 @@
   border-radius: 20px;
   border: none;
   cursor: pointer;
+}
+
+.button:hover {
+  background-color: #157f7a;
+}
+
+.label {
+  font-family: "Fira Code Nerd Font", monospace;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  display: block;
 }

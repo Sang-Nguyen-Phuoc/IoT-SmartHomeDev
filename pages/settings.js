@@ -1,4 +1,3 @@
-// Purpose: Display the settings page, where the user can set the preferred light value and toggle the motion sensor
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Modal from '../components/Modal';
@@ -7,6 +6,7 @@ import classes from '../styles/Settings.module.css';
 import MainNavigation from '@/components/Navigation';
 import { fetchData } from '@/components/FetchLogs';
 import { useAuth } from '@/contexts/authContext';
+import LightValModal from '@/components/LightValModal';
 
 const Settings = () => {
     const routeToLogs = useRouter();
@@ -83,7 +83,7 @@ const Settings = () => {
                     <ProgressBar width={currentLightValue} style={progressBarStyle} />
                     <div className={classes.number}>{currentLightValue}</div>
                     <div className={classes.cta}>
-                        <div className={classes.text}>Toggle sensor</div>
+                        <LightValModal />
                         <Modal motionSensor={motionSensor} />
                     </div>
                 </div>

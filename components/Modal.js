@@ -16,8 +16,8 @@ const Modal = ({ motionSensor }) => {
         if (toggle === false) {
             setIsActiveSending(false);
         }
-    };
 
+    };
 
     const templateParams = {
         email: user && user?.email,
@@ -27,7 +27,6 @@ const Modal = ({ motionSensor }) => {
     const handleSendNotification = () => {
         setIsActiveSending(true);
         setShowSuccessModal(sendNotification(templateParams));
-
     };
 
     useEffect(() => {
@@ -57,7 +56,7 @@ const Modal = ({ motionSensor }) => {
                 className={classes.button}
                 {...(!toggle && { 'data-bs-toggle': 'modal', 'data-bs-target': '#exampleModal' })}
                 onClick={handleToggle}>
-                {isMounted ? (!toggle ? 'Active' : 'Inactive') : 'Loading...'}
+                {isMounted ? (!toggle ? 'Active motion' : 'Inactive') : 'Loading...'}
             </button>
 
             {showSuccessModal && (
