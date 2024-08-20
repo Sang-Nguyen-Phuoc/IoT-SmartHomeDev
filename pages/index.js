@@ -26,30 +26,70 @@ const Index = () => {
   useEffect(() => {
     const getLogs = async () => {
       const fetchedSensor = await fetchData('Sensor');
-
-      const yesterday = new Date();
-      yesterday.setDate(yesterday.getDate() - 1);
-      const formattedDate = yesterday.toISOString().split('T')[0].split('-').reverse().join('-');
-
       const humidData = fetchedSensor.map((log) => log.humidity);
+      /*     
+      humidity: 70
+      light: 396
+      temperature: 32
+      time: "12-8-2024 - 19:23:56"
+      */
 
-      const tempData = fetchedSensor
-        .filter((log) => log.time.split(' - ')[0] === formattedDate)
-        .map((log) => ({
-          val: log.temperature,
-          time: log.time,
-        }));
+      // Get the temperature and light data from the fetchedSensor array in the past 10 days and map it to an array of objects with the time (date and month only) and the value of the sensor data (temperature or light intensity).
+      const currentDate = new Date();
 
-      const lightData = fetchedSensor
-        .filter((log) => log.time.split(' - ')[0] === formattedDate)
-        .map((log) => ({
-          val: log.light,
-          time: log.time
-        }));
+      // Reset the time part of currentDate to midnight (00:00:00)
+      const currentDateMidnight = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
 
+      const filterSensor = fetchedSensor.filter((log) => {
+        let logDate = log.time.split(' - ')[0];
+        const [day, month, year] = logDate.split('-');
+
+        const logDateMidnight = new Date(year, month - 1, day);
+
+        const diffTime = currentDateMidnight.getTime() - logDateMidnight.getTime();
+
+        const diffDays = diffTime / (1000 * 3600 * 24);
+        return diffDays < 11 && diffDays > 0;
+      });
+
+      const tempByDay = {};
+      const lightByDay = {};
+
+      filterSensor.forEach((log) => {
+        const dayOfMonth = log.time.split(' - ')[0].split('-').slice(0, 2).join('-');
+
+        if (!tempByDay[dayOfMonth]) {
+          tempByDay[dayOfMonth] = { sum: 0, count: 0 };
+        }
+        if (!lightByDay[dayOfMonth]) {
+          lightByDay[dayOfMonth] = { sum: 0, count: 0 };
+        }
+
+        tempByDay[dayOfMonth].sum += log.temperature;
+        tempByDay[dayOfMonth].count += 1;
+
+        lightByDay[dayOfMonth].sum += log.light;
+        lightByDay[dayOfMonth].count += 1;
+      });
+
+      const avgTempData = Object.keys(tempByDay).map((day) => ({
+        time: day,
+        value: tempByDay[day].sum / tempByDay[day].count,
+      }));
+
+      const avgLightData = Object.keys(lightByDay).map((day) => ({
+        time: day,
+        value: lightByDay[day].sum / lightByDay[day].count,
+      }));
+
+      avgLightData.sort((a, b) => a.time.split('-')[0] > b.time.split('-')[0]);
+      avgTempData.sort((a, b) => a.time.split('-')[0] > b.time.split('-')[0]);
+
+      setTemp(avgTempData);
+      setLight(avgLightData);
       setHumid(humidData);
-      setTemp(tempData);
-      setLight(lightData);
+
+
 
       if (toggle) {
         const fetchedMotion = await fetchData('Motion');

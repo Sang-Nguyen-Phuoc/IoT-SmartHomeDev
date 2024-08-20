@@ -1,5 +1,4 @@
 import { Line } from "react-chartjs-2";
-
 import {
     Chart as ChartJS,
     LineElement,
@@ -7,8 +6,8 @@ import {
     LinearScale, // y axis
     PointElement,
     Legend,
-    Tooltip,
     Filler,
+    Tooltip,
 } from "chart.js";
 
 ChartJS.register(
@@ -17,37 +16,26 @@ ChartJS.register(
     LinearScale,
     PointElement,
     Legend,
-    Filler
+    Filler,
+    Tooltip
 );
 
-const values = [
-    { time: "0", temp: 20 },
-    { time: "2", temp: 21 },
-    { time: "4", temp: 22 },
-    { time: "6", temp: 23 },
-    { time: "8", temp: 24 },
-    { time: "10", temp: 30 },
-    { time: "12", temp: 10 },
-    { time: "14", temp: 19 },
-    { time: "16", temp: 18 },
-    { time: "18", temp: 16 },
-    { time: "20", temp: 22 },
-    { time: "22", temp: 25 },
-    { time: "24", temp: 34 },
-];
+const LineChart = ({ dataArray, category }) => {
+    const chartColor = category === "Temperature" ? "#179299" : "#DF8E1D";
 
-const LineChart = (props) => {
-    const chartColor = props.category === "Temperature" ? "#179299" : "#DF8E1D";
-
-    const temp = props.dataArray;
-
+    const values = dataArray.map((data) => ({
+        time: data.time,
+        val: data.value,
+        comment: data.comment || "test",  // Assuming each data point has a comment field
+    }));
+    const maxVal = category === "Temperature" ? (Math.floor(Math.max(...values.map((data) => data.val)) * 1.1)) : (Math.floor(Math.max(...values.map((data) => data.val)) * 1.05));
 
     const data = {
         labels: values.map((data) => data.time),
         datasets: [
             {
-                label: "°C",
-                data: values.map((data) => data.temp),
+                label: category === "Temperature" ? "Temperature (°C)" : "Humidity (%)",
+                data: values.map((data) => data.val),
                 borderColor: chartColor,
                 borderWidth: 3,
                 pointBorderColor: chartColor,
@@ -66,31 +54,33 @@ const LineChart = (props) => {
     };
 
     const options = {
-        plugins: {
-            legend: false,
-        },
         responsive: true,
         scales: {
             y: {
                 ticks: {
                     font: {
-                        size: 17,
+                        size: 14,
                         weight: "bold",
+                    },
+                    callback: (value) => {
+                        const unit = category === "Temperature" ? "°C" : "%";
+                        return value + unit;
                     },
                 },
                 title: {
                     display: true,
+                    text: category,
                     padding: {
                         bottom: 10,
                     },
                     font: {
-                        size: 30,
+                        size: 20,
                         style: "italic",
-                        family: "Arial",
+                        family: '"Fira Code Nerd Font", monospace',
                     },
                 },
                 min: 0,
-                max: 50,
+                max: maxVal,
             },
             x: {
                 ticks: {
@@ -101,15 +91,14 @@ const LineChart = (props) => {
                 },
                 title: {
                     display: true,
-                    text: props.category,
-                    color: chartColor,
+                    text: "Past 10 days",
                     padding: {
                         top: 10,
                     },
                     font: {
                         size: 30,
                         style: "italic",
-                        family: "Arial",
+                        family: '"Fira Code Nerd Font", monospace',
                     },
                 },
             },
@@ -128,8 +117,8 @@ const LineChart = (props) => {
             >
                 <Line data={data} options={options}></Line>
             </div>
-        </div >
+        </div>
     );
-}
+};
 
 export default LineChart;
