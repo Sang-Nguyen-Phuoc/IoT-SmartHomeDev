@@ -26,7 +26,6 @@ const LineChart = ({ dataArray, category }) => {
     const values = dataArray.map((data) => ({
         time: data.time,
         val: data.value,
-        comment: data.comment || "test",  // Assuming each data point has a comment field
     }));
     const maxVal = category === "Temperature" ? (Math.floor(Math.max(...values.map((data) => data.val)) * 1.1)) : (Math.floor(Math.max(...values.map((data) => data.val)) * 1.05));
 
