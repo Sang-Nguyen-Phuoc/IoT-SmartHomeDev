@@ -53,6 +53,7 @@ const Settings = () => {
         return () => clearInterval(transitionInterval);
     }, [targetLightValue]);
 
+    // Calculate color based on light intensity value
     const calculateColor = (value) => {
         const ratio = value / 2000;
 
@@ -79,9 +80,11 @@ const Settings = () => {
             <MainNavigation />
             <div className={classes.container}>
                 <div className={classes.table}>
-                    <div className={classes.text}>Preferred light value</div>
+
+                    <div className={classes.text}>Current light intensity</div>
                     <ProgressBar width={currentLightValue} style={progressBarStyle} />
                     <div className={classes.number}>{currentLightValue}</div>
+
                     <div className={classes.cta}>
                         <Modal motionSensor={motionSensor} />
                         <LightValModal />
