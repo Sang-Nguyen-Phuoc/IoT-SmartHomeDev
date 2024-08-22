@@ -117,7 +117,7 @@ const Index = () => {
     };
 
     getLogs();
-  }, [toggle, user, lastMotion, isActiveSending]); // Added lastMotion and isSent as dependencies
+  }, [toggle, user, lastMotion, isActiveSending, humid, temp, light]);
 
   let humidity = humid[0];
   let motionDetected = motion[0];
