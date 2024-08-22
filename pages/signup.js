@@ -6,7 +6,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 
 
-const Login = () => {
+const Signup = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
@@ -84,9 +84,9 @@ const Login = () => {
                         Already signed in to SmartDev? <b className={classes['b']} onClick={() => router.push('/login')}>Sign in now.</b>
                     </span>
                 </form>
-            </div> 
+            </div>
         </div>
     );
 };
 
-export default Login;
+export default Signup;

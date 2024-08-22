@@ -15,14 +15,14 @@ const firebaseConfig = {
 
 let app;
 if (!getApps().length) {
-    app = initializeApp(firebaseConfig);
+    app = initializeApp(firebaseConfig);  // Khởi tạo ứng dụng Firebase
 } else {
-    app = getApp();
+    app = getApp();  // Lấy ứng dụng Firebase đã tồn tại
 }
 
-const auth = getAuth(app);
-const db = getFirestore(app);
-const database = getDatabase(app);
+const auth = getAuth(app);  // Lấy đối tượng Authentication
+const db = getFirestore(app);  // Lấy đối tượng Firestore
+const database = getDatabase(app);  // Lấy đối tượng Realtime Database
 
 export { auth, db, database };
 export default app;
