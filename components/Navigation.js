@@ -1,7 +1,7 @@
 import classes from '../styles/Navigation.module.css';
 import { auth } from '../firebase';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import DateTime from './DateTime';
 

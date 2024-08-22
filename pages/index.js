@@ -6,7 +6,7 @@ import { getUser } from '@/Utils/User';
 import LineChart from '@/components/LineChart';
 import classes from '@/styles/Dashboard.module.css';
 import Clock from '@/components/Clock';
-import { fetchData } from '@/components/FetchLogs';
+import { fetchData } from '@/Utils/FetchLogs';
 import { useAuth } from '@/contexts/authContext';
 import { sendNotification } from '@/Utils/SendNotification'; // Import the sendNotification function
 

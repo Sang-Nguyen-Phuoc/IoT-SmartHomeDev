@@ -2,7 +2,7 @@ import MainNavigation from '@/components/Navigation';
 import React from 'react';
 import classes from '@/styles/Logs.module.css';
 import { useState, useEffect } from 'react';
-import { fetchData } from '@/components/FetchLogs';
+import { fetchData } from '@/Utils/FetchLogs';
 
 const Logs = () => {
     const [logs, setLogs] = useState([]);

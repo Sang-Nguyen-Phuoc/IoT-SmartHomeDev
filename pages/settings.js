@@ -4,7 +4,7 @@ import Modal from '../components/Modal';
 import ProgressBar from '@/components/ProgressBar';
 import classes from '../styles/Settings.module.css';
 import MainNavigation from '@/components/Navigation';
-import { fetchData } from '@/components/FetchLogs';
+import { fetchData } from '@/Utils/FetchLogs';
 import { useAuth } from '@/contexts/authContext';
 import LightValModal from '@/components/LightValModal';
 

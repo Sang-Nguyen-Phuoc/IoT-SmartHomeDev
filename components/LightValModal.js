@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { updateLogs } from '@/components/UpdateLogs';
+import { updateLogs } from '@/Utils/UpdateLogs';
 import classes from '../styles/Settings.module.css';
 
 const LightValModal = () => {

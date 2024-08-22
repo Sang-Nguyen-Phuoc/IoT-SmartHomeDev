@@ -3,7 +3,7 @@ import classes from '../styles/Settings.module.css';
 import { getUser } from '@/Utils/User';
 import { useAuth } from '@/contexts/authContext';
 import { sendNotification } from '@/Utils/SendNotification';
-import { updateLogs } from '@/components/UpdateLogs';
+import { updateLogs } from '@/Utils/UpdateLogs';
 
 const Modal = ({ motionSensor }) => {
     const [user, setUser] = useState(null);
