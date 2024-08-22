@@ -23,18 +23,18 @@ ChartJS.register(
 const LineChart = ({ dataArray, category }) => {
     const chartColor = category === "Temperature" ? "#179299" : "#DF8E1D";
 
-    const values = dataArray.map((data) => ({
+    const values = dataArray && dataArray.map((data) => ({
         time: data.time,
         val: data.value,
     }));
     const maxVal = category === "Temperature" ? (Math.floor(Math.max(...values.map((data) => data.val)) * 1.1)) : (Math.floor(Math.max(...values.map((data) => data.val)) * 1.05));
 
     const data = {
-        labels: values.map((data) => data.time),
+        labels: values && values.map((data) => data.time),
         datasets: [
             {
                 label: category === "Temperature" ? "Temperature (°C)" : "Humidity (%)",
-                data: values.map((data) => data.val),
+                data: values && values.map((data) => data.val),
                 borderColor: chartColor,
                 borderWidth: 3,
                 pointBorderColor: chartColor,

@@ -7,7 +7,7 @@ export const fetchData = async (collection) => {
         const snapshot = await get(dbRef);
         if (snapshot.exists()) {
             const data = snapshot.val();
-            const logsArray = Object.keys(data).map((key) => {
+            const logsArray = data && Object.keys(data).map((key) => {
                 return {
                     id: key,
                     ...data[key],

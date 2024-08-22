@@ -26,13 +26,16 @@ const Index = () => {
   useEffect(() => {
     const getLogs = async () => {
       const fetchedSensor = await fetchData('Sensor');
-      const humidData = fetchedSensor.map((log) => log.humidity);
+      const humidData = fetchedSensor && fetchedSensor.map((log) => log.humidity);
       const currentDate = new Date();
 
       // Reset the time part of currentDate to midnight (00:00:00)
       const currentDateMidnight = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
 
       const filterSensor = fetchedSensor.filter((log) => {
+        // Check if log.time is defined before splitting
+        if (!log.time) return false;
+
         let logDate = log.time.split(' - ')[0];
         const [day, month, year] = logDate.split('-');
 
@@ -64,12 +67,12 @@ const Index = () => {
         lightByDay[dayOfMonth].count += 1;
       });
 
-      const avgTempData = Object.keys(tempByDay).map((day) => ({
+      const avgTempData = tempByDay && Object.keys(tempByDay).map((day) => ({
         time: day,
         value: tempByDay[day].sum / tempByDay[day].count,
       }));
 
-      const avgLightData = Object.keys(lightByDay).map((day) => ({
+      const avgLightData = lightByDay && Object.keys(lightByDay).map((day) => ({
         time: day,
         value: lightByDay[day].sum / lightByDay[day].count,
       }));
@@ -85,7 +88,7 @@ const Index = () => {
 
       if (toggle) {
         const fetchedMotion = await fetchData('Motion');
-        const motionData = fetchedMotion.map((log) => log.time);
+        const motionData = fetchedMotion && fetchedMotion.map((log) => log.time);
         setMotion(motionData);
 
         // Check if the motion detected is new

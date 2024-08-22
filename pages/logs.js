@@ -63,7 +63,7 @@ const Logs = () => {
                         </div>
                     </div>
                     <div className={classes['logs']}>
-                        {currentLogs.map((log) => (
+                        {currentLogs && currentLogs.map((log) => (
                             <div key={log.id} className={classes['log']}>
                                 <div className={classes['time']}>{log.time}: </div>
                                 {label === 'temperature' && <div className={classes['data']}>{log.temperature}°C</div>}

@@ -20,8 +20,8 @@ const Settings = () => {
             const data = await fetchData('Sensor');
             const motionData = await fetchData('Motion');
 
-            const motionValues = motionData.map((item) => item.time);
-            const lightValues = data.map((item) => item.light);
+            const motionValues = motionData && motionData.map((item) => item.time);
+            const lightValues = data && data.map((item) => item.light);
 
             const latestMotionValue = motionValues[0];
             const latestLightValue = lightValues[0];
