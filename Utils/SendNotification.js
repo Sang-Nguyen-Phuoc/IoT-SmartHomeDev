@@ -16,7 +16,7 @@ export const sendNotification = async (templateParams) => {
         const res = await fetch('/api/sms/sms', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json', // Send the data as JSON
             },
             body: JSON.stringify(templateParams),
         });

@@ -35,7 +35,7 @@ const Logs = () => {
         setLabel(newLabel);
     }
 
-    const startIdx = (page - 1) * 15;
+    const startIdx = (page - 1) * 16;
     const currentLogs = logs.slice(startIdx, startIdx + 16);
     return (
         <>

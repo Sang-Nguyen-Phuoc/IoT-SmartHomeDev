@@ -10,7 +10,7 @@ export const getUser = (setUser) => {
         const docRef = doc(db, "Users", user.uid);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-            setUser(docSnap.data());
+            setUser(docSnap.data()); //
         }
     });
 };

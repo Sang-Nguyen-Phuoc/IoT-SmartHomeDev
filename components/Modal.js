@@ -16,7 +16,6 @@ const Modal = ({ motionSensor }) => {
         if (toggle === false) {
             setIsActiveSending(false);
         }
-
     };
 
     const templateParams = {
@@ -45,7 +44,7 @@ const Modal = ({ motionSensor }) => {
         if (showSuccessModal) {
             const timer = setTimeout(() => {
                 setShowSuccessModal(false);
-            }, 2000); // Close the modal after 2 seconds
+            }, 3000); // Close the modal after 2 seconds
             return () => clearTimeout(timer);
         }
     }, [showSuccessModal]);

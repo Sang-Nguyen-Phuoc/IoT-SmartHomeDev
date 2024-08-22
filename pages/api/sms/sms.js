@@ -5,7 +5,7 @@ import { PUSHSAFER_KEY, PUSHSAFER_NOTIFICATION_SETTINGS } from '@/Utils/Constant
 const push = new Push({
     k: PUSHSAFER_KEY,
     debug: true
-});
+}); // Initialize Pushsafer with the API key
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
