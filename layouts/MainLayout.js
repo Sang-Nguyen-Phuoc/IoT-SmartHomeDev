@@ -1,4 +1,3 @@
-
 import MainNavigation from '@/components/Navigation';
 import classes from '@/styles/MainLayout.module.css';
 

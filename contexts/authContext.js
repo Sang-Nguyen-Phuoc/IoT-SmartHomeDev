@@ -10,6 +10,8 @@ export const AuthProvider = ({ children }) => {
     const [showSuccessModal, setShowSuccessModal] = useState(false);
     const [isActiveSending, setIsActiveSending] = useState(false);
     const [lastMotion, setLastMotion] = useState(null);
+
+
     useEffect(() => {
         setIsMounted(true); // Mark component as mounted
         if (typeof window !== 'undefined') {
